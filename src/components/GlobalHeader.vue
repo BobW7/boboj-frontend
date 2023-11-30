@@ -24,10 +24,13 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .title-bar {
+  display: flex;
+  align-items: center;
 }
 
 .title {
   color: #444;
+  margin-left: 16px;
 }
 
 .logo {
