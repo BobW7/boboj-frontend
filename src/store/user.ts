@@ -1,4 +1,5 @@
 import { StoreOptions } from "vuex";
+import ACCESS_ENUM from "@/access/accessEnum";
 
 export default {
   namespaced: true,
@@ -6,14 +7,14 @@ export default {
   state: () => ({
     loginUser: {
       userName: "未登录",
-      role: "Common",
+      userRole: ACCESS_ENUM.NOT_LOGIN,
     },
   }),
   // actions 执行异步操作，并且触发mutation的更改（调用mutation）
   actions: {
     getLoginUser({ commit, state }, payload) {
       //todo 真实登录的话就要请求后端了，从远程请求获取登录信息
-      commit("updateUser", { userName: "Bob", role: "Admin" });
+      commit("updateUser", payload);
     },
   },
   // mutations 定义了更新变量增删改的方法
