@@ -41,6 +41,7 @@ const visibleRoutes = routes.filter((item, index) => {
   if (item.meta?.hideInMenu) {
     return false;
   }
+  // todo 根据权限过滤菜单
   return true;
 });
 
