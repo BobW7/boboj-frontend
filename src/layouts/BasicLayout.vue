@@ -26,6 +26,7 @@
 #basicLayout .content {
   background: linear-gradient(to right, #aaa, #fff);
   margin-bottom: 16px;
+  padding: 20px;
 }
 
 #basicLayout .footer {
