@@ -62,14 +62,6 @@ router.afterEach((to, from, failure) => {
   selectedKeys.value = [to.path];
 });
 
-setTimeout(() => {
-  //用dispatch来调用store中的module中的action方法，注意路径就是:模块名/方法名
-  store.dispatch("user/getLoginUser", {
-    userName: "BobAdmin",
-    userRole: ACCESS_ENUM.USER,
-  });
-}, 100);
-
 const doMenuClick = (key: string) => {
   router.push({
     path: key,
