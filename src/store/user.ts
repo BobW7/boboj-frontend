@@ -23,7 +23,6 @@ export default {
           userRole: ACCESS_ENUM.NOT_LOGIN,
         });
       }
-      commit("updateUser", payload);
     },
   },
   // mutations 定义了更新变量增删改的方法

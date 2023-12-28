@@ -32,13 +32,13 @@
 import { routes } from "../router/routes";
 import { useRouter } from "vue-router";
 import { computed, ref } from "vue";
-import { useStore } from "vuex";
+import store from "@/store";
 import checkAccess from "@/access/checkAccess";
 import ACCESS_ENUM from "@/access/accessEnum";
 
 const router = useRouter();
-const store = useStore();
 
+/*console.log("打印出state中的userName：" + store.state.user.loginUser.userName);*/
 // 展示在菜单中的路由数据,computed动态计算，路由数据改变会重新触发渲染
 const visibleRoutes = computed(() => {
   return routes.filter((item, index) => {
@@ -61,7 +61,11 @@ const selectedKeys = ref(["/"]);
 router.afterEach((to, from, failure) => {
   selectedKeys.value = [to.path];
 });
-
+/*
+setTimeout(() => {
+  //用dispatch来调用store中的module中的action方法，注意路径就是:模块名/方法名
+  store.dispatch("user/getLoginUser", {});
+}, 100);*/
 const doMenuClick = (key: string) => {
   router.push({
     path: key,
