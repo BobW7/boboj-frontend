@@ -34,7 +34,6 @@ import { useRouter } from "vue-router";
 import { computed, ref } from "vue";
 import store from "@/store";
 import checkAccess from "@/access/checkAccess";
-import ACCESS_ENUM from "@/access/accessEnum";
 
 const router = useRouter();
 

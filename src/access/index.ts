@@ -8,7 +8,8 @@ router.beforeEach(async (to, from, next) => {
   let currentUser = user.loginUser;
   console.log("登录用户信息：", currentUser);
   //const loginUser = store.state.user.loginUser;
-  // 自动登录,如果之前没登录
+  // 自动登录,如果之前没登录（以是否有userRole来区分）
+  // 前端在调试的时候可以把这段注释掉，并且改写getLoginUser不一直请求后端自动登录
   if (!currentUser || !currentUser.userRole) {
     //加await是为了等用户完成登录之后，在执行后面的代码
     await store.dispatch("user/getLoginUser");

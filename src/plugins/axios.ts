@@ -1,6 +1,6 @@
 // Add a request interceptor
 import axios from "axios";
-
+//axios 请求库的全局参数
 axios.interceptors.request.use(
   function (config) {
     // Do something before request is sent

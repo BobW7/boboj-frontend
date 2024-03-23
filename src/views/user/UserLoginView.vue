@@ -1,6 +1,14 @@
 <template>
   <div id="userLoginView">
-    <a-form :model="form" :style="{ width: '600px' }" @submit="handleSubmit">
+    <h2 style="margin-bottom: 16px">用户登录</h2>
+    <a-form
+      :model="form"
+      :style="{ width: '600px', margin: '0 auto' }"
+      label-align="left"
+      @submit="handleSubmit"
+      size="large"
+      auto-label-width
+    >
       <a-form-item field="userAccount" label="账号">
         <a-input v-model="form.userAccount" placeholder="请输入账号" />
       </a-form-item>
@@ -11,7 +19,14 @@
         />
       </a-form-item>
       <a-form-item>
-        <a-button html-type="submit">登录</a-button>
+        <a-button html-type="submit" type="primary" size="large" long
+          >登录
+        </a-button>
+      </a-form-item>
+      <a-form-item>
+        <a-button type="outline" @click="goToRegister" size="large" long
+          >注册
+        </a-button>
       </a-form-item>
     </a-form>
   </div>
@@ -49,5 +64,10 @@ const handleSubmit = async () => {
   } else {
     message.error("登录失败," + res.message);
   }
+};
+const goToRegister = () => {
+  router.push({
+    path: "/user/register",
+  });
 };
 </script>
