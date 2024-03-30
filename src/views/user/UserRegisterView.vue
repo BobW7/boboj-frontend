@@ -13,10 +13,18 @@
         <a-input v-model="form.userAccount" placeholder="请输入账号" />
       </a-form-item>
       <a-form-item field="userPassword" tooltip="密码不少于8位" label="密码">
-        <a-input v-model="form.userPassword" placeholder="请输入密码" />
+        <a-input
+          v-model="form.userPassword"
+          password
+          placeholder="请输入密码"
+        />
       </a-form-item>
       <a-form-item field="checkPassword" label="确认密码">
-        <a-input v-model="form.checkPassword" placeholder="请确认密码" />
+        <a-input
+          v-model="form.checkPassword"
+          passowrd
+          placeholder="请确认密码"
+        />
       </a-form-item>
       <a-form-item>
         <a-button html-type="submit" type="primary" long>注册</a-button>
