@@ -1,7 +1,7 @@
 <template>
   <div class="example">
-    <MdEditor :value="mdValue" :handle-change="onMdChange" />
     <CodeEditor :value="codeValue" :handle-change="onCodeChange" />
+    <MdEditor :value="mdValue" :handle-change="onMdChange" />
   </div>
 </template>
 

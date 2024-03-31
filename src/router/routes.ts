@@ -1,5 +1,6 @@
 import { RouteRecordRaw } from "vue-router";
-import HomeView from "@/views/ExampView.vue";
+import HomeView from "@/views/ExampleView.vue";
+import ExampleView from "@/views/ExampleView.vue";
 import AdminView from "@/views/AdminView.vue";
 import NoAuthView from "@/views/NoAuthView.vue";
 import ACCESS_ENUM from "@/access/accessEnum";
@@ -7,6 +8,8 @@ import UserLayout from "@/layouts/UserLayout.vue";
 import UserLoginView from "@/views/user/UserLoginView.vue";
 import UserRegisterView from "@/views/user/UserRegisterView.vue";
 import AddQuestionView from "@/views/question/AddQuestionView.vue";
+import ManageQuestionView from "@/views/question/ManageQuestionView.vue";
+import UpdateQuestionView from "@/views/question/UpdateQuestionView.vue";
 
 export const routes: Array<RouteRecordRaw> = [
   {
@@ -38,9 +41,25 @@ export const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: "/update/question",
+    name: "更新题目",
+    component: UpdateQuestionView,
+    // meta: {
+    //   access: ACCESS_ENUM.ADMIN,
+    // },
+  },
+  {
+    path: "/manage/question",
+    name: "管理题目",
+    component: ManageQuestionView,
+    // meta: {
+    //   access: ACCESS_ENUM.ADMIN,
+    // },
+  },
+  {
     path: "/",
     name: "题库",
-    component: HomeView,
+    component: ExampleView,
   },
   {
     path: "/admin",
@@ -62,6 +81,9 @@ export const routes: Array<RouteRecordRaw> = [
     path: "/noAuth",
     name: "无权限",
     component: NoAuthView,
+    meta: {
+      hideInMenu: true,
+    },
   },
   {
     path: "/about",

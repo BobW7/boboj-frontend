@@ -1,6 +1,6 @@
 <template>
-  <div id="addQuestionView">
-    <h2>创建题目</h2>
+  <div id="updateQuestionView">
+    <h2>更新题目</h2>
     <a-form :model="form" label-align="left">
       <a-form-item field="title" label="标题">
         <a-input v-model="form.title" placeholder="请输入标题" />
@@ -119,28 +119,78 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from "vue";
+import { onMounted, ref } from "vue";
 import MdEditor from "@/components/MdEditor.vue";
 import { QuestionControllerService } from "../../../generated";
 import message from "@arco-design/web-vue/es/message";
+import { useRoute, useRouter } from "vue-router";
 
+const route = useRoute();
+const router = useRouter();
+onMounted(() => {
+  loadData();
+});
+/**
+ * 根据传来的题目id获取老数据
+ */
+const loadData = async () => {
+  const id = route.query.id;
+  console.log(id);
+  if (!id) {
+    return;
+  }
+  const res = await QuestionControllerService.getQuestionByIdUsingGet(id);
+  if (res.code === 0) {
+    //JSON转JS对象
+    form.value = res.data as any;
+    if (!form.value.judgeCase) {
+      form.value.judgeCase = [
+        {
+          input: "",
+          output: "",
+        },
+      ];
+    } else {
+      form.value.judgeCase = JSON.parse(form.value.judgeCase as any);
+    }
+    if (!form.value.judgeConfig) {
+      form.value.judgeConfig = {
+        memoryLimit: 1000,
+        stackLimit: 1000,
+        timeLimit: 1000,
+      };
+    } else {
+      form.value.judgeConfig = JSON.parse(form.value.judgeConfig as any);
+    }
+    if (!form.value.tags) {
+      form.value.tags = [];
+    } else {
+      form.value.tags = JSON.parse(form.value.tags as any);
+    }
+  } else {
+    message.error("加载失败！" + res.message);
+  }
+};
 /**
  * 提交表单到后端接口
  */
 const doSubmit = async () => {
   console.log(form);
-  const res = await QuestionControllerService.addQuestionUsingPost(form);
+  const res = await QuestionControllerService.updateQuestionUsingPost(
+    form.value
+  );
   if (res.code === 0) {
-    message.success("创建成功");
+    message.success("更新成功");
+    await router.push("/manage/question");
   } else {
-    message.error("创建失败," + res.description);
+    message.error("更新失败," + res.description);
   }
 };
 /**
  * 添加判题用例
  */
 const handleAdd = () => {
-  form.judgeCase.push({
+  form.value.judgeCase.push({
     input: "",
     output: "",
   });
@@ -150,12 +200,12 @@ const handleAdd = () => {
  * @param index
  */
 const handleDelete = (index: number) => {
-  form.judgeCase.splice(index, 1);
+  form.value.judgeCase.splice(index, 1);
 };
 /**
  * 表单原始结构
  */
-const form = reactive({
+let form = ref({
   title: "",
   tags: [],
   answer: "",
@@ -168,10 +218,10 @@ const form = reactive({
   },
 });
 const onContentChange = (value: string) => {
-  form.content = value;
+  form.value.content = value;
 };
 const onAnswerChange = (value: string) => {
-  form.answer = value;
+  form.value.answer = value;
 };
 </script>
 
