@@ -226,7 +226,7 @@ const onAnswerChange = (value: string) => {
 </script>
 
 <style scoped>
-#addQuestionView {
+#updateQuestionView {
   .arco-input-wrapper {
     width: 300px;
   }

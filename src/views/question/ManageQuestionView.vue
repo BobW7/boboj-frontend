@@ -6,9 +6,10 @@
       :pagination="{
         showTotal: true,
         pageSize: searchParams.pageSize,
-        current: searchParams.pageNum,
+        current: searchParams.current,
         total,
       }"
+      @page-change="onPageChange"
     >
       <template #optional="{ record }">
         <a-space>
@@ -21,17 +22,16 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watchEffect } from "vue";
 import { Question, QuestionControllerService } from "../../../generated";
 import message from "@arco-design/web-vue/es/message";
 import { useRouter } from "vue-router";
 
-const show = ref(true);
 const dataList = ref([]);
 const total = ref(0);
 const searchParams = ref({
   pageSize: 10,
-  pageNum: 1,
+  current: 1,
 });
 
 const loadData = async () => {
@@ -45,6 +45,14 @@ const loadData = async () => {
     message.error("加载失败！" + res.message);
   }
 };
+
+/**
+ * 监听下面函数中所有变量的变化，如果有变化都会重新执行（分页时用到）
+ * 这里loadData中的变量就是searchParams。value
+ */
+watchEffect(() => {
+  loadData();
+});
 
 onMounted(() => {
   loadData();
@@ -104,6 +112,13 @@ const columns = [
     slotName: "optional",
   },
 ];
+const onPageChange = (page: number) => {
+  // 直接修改分页请求参数中的current字段，这将会被watchEffect()监听到
+  searchParams.value = {
+    ...searchParams.value,
+    current: page,
+  };
+};
 const router = useRouter();
 const doUpdate = async (question: Question) => {
   router.push({
@@ -128,7 +143,7 @@ const doDelete = async (question: Question) => {
 </script>
 
 <style scoped>
-#addQuestionView {
+#manageQuestionView {
   .arco-input-wrapper {
     width: 300px;
   }

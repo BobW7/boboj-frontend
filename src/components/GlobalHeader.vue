@@ -44,10 +44,9 @@ const visibleRoutes = computed(() => {
     if (item.meta?.hideInMenu) {
       return false;
     }
-    // 根据权限过滤菜单
+    // 根据权限和路由过滤菜单
     if (
-      !checkAccess(store.state.user.loginUser, item?.meta?.access as string) ||
-      item.path.includes("update")
+      !checkAccess(store.state.user.loginUser, item?.meta?.access as string)
     ) {
       return false;
     }
