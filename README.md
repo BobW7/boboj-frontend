@@ -1,5 +1,8 @@
 # boboj-frontend
-
+## 根据后台生成前端请求代码
+```shell
+openapi --input http://localhost:8121/api/v2/api-docs --output ./generated --client axios
+```
 ## Project setup
 ```
 yarn install
